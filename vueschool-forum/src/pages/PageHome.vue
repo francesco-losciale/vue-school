@@ -8,14 +8,13 @@
 
 <script>
 
-import sourceData from '@/data'
+import sourceData from '@/data' // @ is an alias defined in webpack.base.conf.js
 
 import ThreadList from '@/components/ThreadList'
 
 console.log(sourceData)
 
 export default {
-  name: 'HelloWorld',
   components: { // used to register the components inside another
     ThreadList
   },
