@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="wrapper">
     <div class="container">
       <router-view/>
     </div>
@@ -8,10 +8,8 @@
 
 <script>
 
-const testVar = 23
-
 export default {
-  name: 'app'
+  name: 'app' // no particular purpose, just the name of the App component
 }
 </script>
 

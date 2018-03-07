@@ -17,7 +17,7 @@ export default new Router({
       path: '/thread/:id',
       name: 'ThreadShow',
       component: ThreadShow,
-      props: true // tell the router to pass the params to the component as properties (:id goes into ThreadShow)
+      props: true // pass the params to the component as properties (:id goes into ThreadShow)
     }
   ]
 })
