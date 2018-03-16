@@ -8,6 +8,22 @@
 
     <PostList :posts="posts" />
 
+    <form @submit.prevent="addPost">
+      <div class="form-group">
+        <textarea 
+        name="" 
+        id="" 
+        cols="30" 
+        rows="10" 
+        class="form-input" 
+        v-model="newPostText"
+        > 
+        </textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn-blue">Submit post</button>
+      </div>
+    </form>
 
     </div>
   </div>
@@ -30,13 +46,37 @@ export default {
   },
   data () {
     return {
-      thread: sourceData.threads[this.id] // thread: sourceData.threads[this.$route.params.id], // coupled
+      thread: sourceData.threads[this.id], // thread: sourceData.threads[this.$route.params.id], // coupled
+      newPostText: ''
     }
   },
   computed: {
     posts () {
       const postIds = Object.keys(this.thread.posts)
       return Object.values(sourceData.posts).filter(post => postIds.includes(post['.key']))
+    }
+  },
+  methods: {
+    addPost () {
+      const postId = 'great-post' + Math.random()
+      const post = {
+        text: this.newPostText,
+        publishedAt: Math.floor(Date.now() / 1000),
+        threadId: this.id,
+        userId: 'L664y3qZSubDbT1R6npC0EEybJ73',
+        '.key': postId
+      }
+
+      // this code is not reactive
+      // sourceData.posts[postId] = post
+      // this.thread.posts[postId] = postId
+
+      // this one yes it is
+      this.$set(sourceData.posts, postId, post)
+      this.$set(this.thread.posts, postId, postId)
+      this.$set(sourceData.users[post.userId].posts, postId, postId)
+
+      this.newPostText = ''
     }
   }
 }
