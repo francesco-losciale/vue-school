@@ -8,22 +8,7 @@
 
     <PostList :posts="posts" />
 
-    <form @submit.prevent="addPost">
-      <div class="form-group">
-        <textarea 
-        name="" 
-        id="" 
-        cols="30" 
-        rows="10" 
-        class="form-input" 
-        v-model="newPostText"
-        > 
-        </textarea>
-      </div>
-      <div class="form-actions">
-        <button class="btn-blue">Submit post</button>
-      </div>
-    </form>
+    <PostEditor @save="save" :threadId="id" />
 
     </div>
   </div>
@@ -33,9 +18,11 @@
 <script>
 import sourceData from '@/data'
 import PostList from '@/components/PostList'
+import PostEditor from '@/components/PostEditor'
 export default {
   components: {
-    PostList
+    PostList,
+    PostEditor
   },
   // props is used from parent component to pass values to child components
   props: {
@@ -46,8 +33,7 @@ export default {
   },
   data () {
     return {
-      thread: sourceData.threads[this.id], // thread: sourceData.threads[this.$route.params.id], // coupled
-      newPostText: ''
+      thread: sourceData.threads[this.id] // thread: sourceData.threads[this.$route.params.id], // coupled
     }
   },
   computed: {
@@ -57,26 +43,13 @@ export default {
     }
   },
   methods: {
-    addPost () {
-      const postId = 'great-post' + Math.random()
-      const post = {
-        text: this.newPostText,
-        publishedAt: Math.floor(Date.now() / 1000),
-        threadId: this.id,
-        userId: 'L664y3qZSubDbT1R6npC0EEybJ73',
-        '.key': postId
-      }
+    save (eventData) {
+      const post = eventData.post
+      const postId = eventData.post['.key']
 
-      // this code is not reactive
-      // sourceData.posts[postId] = post
-      // this.thread.posts[postId] = postId
-
-      // this one yes it is
       this.$set(sourceData.posts, postId, post)
-      this.$set(this.thread.posts, postId, postId)
-      this.$set(sourceData.users[post.userId].posts, postId, postId)
-
-      this.newPostText = ''
+      this.$set(this.thread.posts, postId, post['.key'])
+      this.$set(sourceData.users[post.userId].posts, postId, post['.key'])
     }
   }
 }
