@@ -15,7 +15,7 @@
 
             </p>
             <p class="text-faded text-xsmall">
-                By <a href="#">{{user.name}}</a>, {{thread.publishedAt}}.
+                By <a href="#">{{user.name}}</a>, <AppDate :timestamp="thread.publishedAt"/>.
             </p>
         </div>
 
