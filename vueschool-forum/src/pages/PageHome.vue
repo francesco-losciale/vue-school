@@ -2,23 +2,21 @@
 
   <div class="col-full">
     <h1>Welcome to the Forum</h1>
-    <ForumList :forums="forums" />
+    <CategoryList :categories="categories" />
   </div>
 </template>
 
 <script>
 import sourceData from '@/data' // @ is an alias defined in webpack.base.conf.js
-import ForumList from '@/components/ForumList'
+import CategoryList from '@/components/CategoryList'
 console.log(sourceData)
 export default {
   components: { // used to register the components inside another
-    ForumList
+    CategoryList
   },
   data () {
     return {
-      forums: Object.values(sourceData.forums),
-      posts: sourceData.posts,
-      users: sourceData.users
+      categories: Object.values(sourceData.categories)
     }
   }
 }
